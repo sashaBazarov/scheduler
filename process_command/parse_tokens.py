@@ -15,13 +15,14 @@ def parse_command(string: str):
             - "args" (list): Список аргументов.
             - "kwargs" (dict): Словарь именованных аргументов.
     """
-    tokens = re.findall(r"<.*?>|\b\w+\b|\".*?\"|[.,!?;:(){}[\]=+\-*/<>]", string)
+    tokens = re.findall(r"<.*?>|\b\w+\b|\".*?\"|=", string)
     tokens = [token.strip('"') for token in tokens]  
 
-    command = load_command(tokens.pop(0))
+    command_name = tokens.pop(0)
+    command = load_command(command_name)
 
     if not command:
-        raise ValueError(f"Command '{tokens[0]}' not found.")
+        raise ValueError(f"Command '{command_name}' not found.")
     
     kwargs = {}
     args = []
