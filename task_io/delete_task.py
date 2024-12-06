@@ -3,6 +3,15 @@ import os
 
 
 def delete_task(task: Task):
+    """
+    Удаляет задачу, удаляя соответствующий JSON файл.
+
+    Аргументы:
+        task (Task): Объект задачи, который нужно удалить, содержащий атрибут 'id'.
+
+    Исключения:
+        ValueError: Если файл задачи не существует.
+    """
     path = f"tasks/{task.id}.json"
 
     if not os.path.exists(path):

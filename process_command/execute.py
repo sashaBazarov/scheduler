@@ -1,16 +1,19 @@
-from .parse_tokens import parse_tokens
+from .parse_tokens import parse_command
 from .commands import load_command
 from exceptions import CommandException
 
-def execute(string: str):
-    tokens = parse_tokens(string)
-    command = tokens["command"]
-    args = tokens["args"]
-    kwargs = tokens["kwargs"]
+def execute(string: str):   
+    """
+    Разбирает строку команды, загружает соответствующую командную функцию и выполняет ее с предоставленными аргументами.
 
-    loaded_command = load_command(command)
+    Аргументы:
+        string (str): Строка команды для разбора и выполнения.
 
-    if not loaded_command:
-        raise CommandException("Invalid command input", command, *args, **kwargs)
+    Исключения:
+        CommandException: Если команда недействительна или не может быть загружена.
+    Возвращает:
+        None
+    """
     
-    loaded_command(*args, **kwargs)
+    command = parse_command(string)
+    command.execute()

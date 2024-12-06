@@ -4,30 +4,29 @@ from commands.remove_task import remove_task
 
 
 class TestRemoveTask(unittest.TestCase):
-
     @patch("commands.remove_task.delete_task")
     @patch("commands.remove_task.find_task")
     def test_remove_task_success(self, mock_find_task, mock_delete_task):
-        # Mock the task to be found
+        # Мокируем найденную задачу
         mock_task = MagicMock()
         mock_task.id = "123"
         mock_find_task.return_value = mock_task
 
         with patch("builtins.print") as mock_print:
-            # Call remove_task
+            # Вызываем remove_task
             remove_task("123")
 
-            # Assertions
+            # Проверки
             mock_find_task.assert_called_once_with("123")
             mock_delete_task.assert_called_once_with(mock_task)
             mock_print.assert_called_once_with("Task with id 123 has been deleted.")
 
     @patch("commands.remove_task.find_task")
     def test_remove_task_not_found(self, mock_find_task):
-        # Mock task not found
+        # Мокируем отсутствие задачи
         mock_find_task.return_value = None
 
-        # Call remove_task and assert it raises ValueError
+        # Вызываем remove_task и проверяем, что выбрасывается ValueError
         with self.assertRaises(ValueError) as context:
             remove_task("123")
 

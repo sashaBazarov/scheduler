@@ -1,15 +1,32 @@
 import re
+from command import Command
+from .commands import load_command
 
-def parse_tokens(string: str):
-
+def parse_command(string: str):
+    """
+    Разбирает данную строку на команду, аргументы и именованные аргументы.
+    Функция токенизирует входную строку и выделяет первый токен как команду.
+    Затем она обрабатывает оставшиеся токены для идентификации аргументов и именованных аргументов.
+    Аргументы:
+        string (str): Входная строка для разбора.
+    Возвращает:
+        dict: Словарь, содержащий:
+            - "command" (str): Первый токен, определенный как команда.
+            - "args" (list): Список аргументов.
+            - "kwargs" (dict): Словарь именованных аргументов.
+    """
     tokens = re.findall(r"<.*?>|\b\w+\b|\".*?\"|[.,!?;:(){}[\]=+\-*/<>]", string)
     tokens = [token.strip('"') for token in tokens]  
 
-    command = tokens.pop(0)
+    command = load_command(tokens.pop(0))
+
+    if not command:
+        raise ValueError(f"Command '{tokens[0]}' not found.")
     
     kwargs = {}
     args = []
     i = 0
+
     while i < len(tokens):
         if i + 2 < len(tokens) and tokens[i + 1] == '=':
             key = tokens[i]
@@ -20,10 +37,4 @@ def parse_tokens(string: str):
             args.append(tokens[i])
             i += 1
     
-    return {
-        "command": command,
-        "args": args,
-        "kwargs": kwargs
-    }
-
-
+    return Command(command, args, kwargs)

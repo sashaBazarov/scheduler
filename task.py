@@ -4,9 +4,50 @@ from json import dumps
 
 
 class Task:
-    def __init__(self, title, description, 
-                 category, due_date: datetime, priority, status = "Not done", id=str(uuid1())[:6]) -> None:
-        
+    """
+    Класс, используемый для представления задачи.
+    Атрибуты
+    ----------
+    id : str
+        уникальный идентификатор задачи
+    title : str
+        название задачи
+    description : str
+        подробное описание задачи
+    category : str
+        категория, к которой относится задача
+    due_date : datetime
+        срок выполнения задачи
+    priority : str
+        уровень приоритета задачи
+    status : str, optional
+        текущий статус задачи (по умолчанию "Не выполнено")
+    Методы
+    -------
+    __eq__(other)
+        Проверяет, равны ли два экземпляра Task на основе их атрибутов.
+    __hash__()
+        Возвращает хэш-значение задачи на основе ее id.
+    due_date
+        Свойство для получения срока выполнения в формате "dd Month yyyy".
+    due_date(value)
+        Сеттер для установки срока выполнения из строки в формате "dd Month yyyy".
+    date
+        Свойство для получения срока выполнения в формате "dd Month yyyy".
+    date(value)
+        Сеттер для установки срока выполнения из строки в формате "dd Month yyyy".
+    to_dict()
+        Преобразует атрибуты задачи в словарь.
+    to_json()
+        Преобразует атрибуты задачи в строку JSON.
+    to_list()
+        Преобразует атрибуты задачи в список.
+    get_attrs()
+        Возвращает генератор имен атрибутов, исключая приватные и вызываемые атрибуты.
+    """
+    def __init__(self, title: str, description: str, 
+                 category: str, due_date: datetime, priority: str, status = "Not done", id=str(uuid1())[:6]) -> None:
+
         self.id = id
         self.title = title
         self.description = description

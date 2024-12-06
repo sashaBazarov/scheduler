@@ -9,7 +9,7 @@ class TestViewTasks(unittest.TestCase):
     @patch('commands.view_tasks.filter_tasks')
     @patch('commands.view_tasks.tabulate')
     def test_view_tasks(self, mock_tabulate, mock_filter_tasks, mock_load_tasks):
-        # Mock Task objects
+
         task1 = MagicMock(spec=Task)
         task1.to_list.return_value = ["Task 1", "Description 1", "Work", "2023-10-01", "High", "Pending", 1]
         task2 = MagicMock(spec=Task)
@@ -19,11 +19,9 @@ class TestViewTasks(unittest.TestCase):
         mock_filter_tasks.return_value = [task1]
         mock_tabulate.return_value = "Mocked Table"
 
-        # Test `view_tasks`
         with patch('builtins.print') as mock_print:
             view_tasks(category="Work", status="Pending")
 
-            # Assertions
             mock_load_tasks.assert_called_once()
             mock_filter_tasks.assert_called_once_with(
                 [task1, task2], "Work", "Pending", None, None

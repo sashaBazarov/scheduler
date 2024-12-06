@@ -2,8 +2,8 @@ from process_command import execute
 
 def main():
     """
-    Main loop to process user commands.
-    Continuously prompts the user for input until 'exit' is entered.
+    Основной цикл программы.
+    Полуает команду через input()
     """
     print("Enter a command (or 'exit' to quit):")
 
