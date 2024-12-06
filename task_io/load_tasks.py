@@ -44,6 +44,7 @@ def load_task(file_path):
     """
     try:
         with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
             return Task(**json.load(f))
     except (json.JSONDecodeError, TypeError) as e:
         print(f"Error loading task from '{file_path}': {e}")
