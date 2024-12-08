@@ -1,4 +1,4 @@
-```markdown
+
 # Task Manager CLI Documentation
 
 ## Overview
@@ -11,9 +11,10 @@ This Task Manager CLI allows you to manage tasks through a command-line interfac
 Creates a new task.
 
 **Usage:**
-```bash
+
+
 addtask
-```
+
 You will be prompted to input task details such as title, description, category, priority, etc.
 
 ---
